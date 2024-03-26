@@ -17,6 +17,7 @@ export default defineConfig({
     ],
     server: {
         host: '192.168.56.33',
+        mimetype: 'text/html',
         watch: {
             usePolling: true,
         },
