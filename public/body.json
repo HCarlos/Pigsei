@@ -1,4 +1,5 @@
 {
-    "src": "http://localhost:8000/images/empty_user_male.png",
-    "nombre": "carlitos hidalgo"
+    "src": "http://localhost:8000/images/empty_user_female.png",
+    "nombre": "carlitos hidalgo",
+    "cualquiera": "http://localhost:8000/images/anonymous-user-laptop.jpg"
 }

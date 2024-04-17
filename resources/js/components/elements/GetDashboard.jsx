@@ -1,22 +1,31 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
-import {GetSingleImage} from "./GetSingleImage.js";
 import {SayImage} from "./SayImage.jsx";
+import axios from "axios";
+import GetImageDataJson from "./GetImageDataJson.js";
 
 const GetDashboard = () => {
-    const [data, setData] = GetSingleImage();
-    // const myFetch = GetSingleImage();
+    let datajs = new GetImageDataJson();
+    const [data, setData] = useState([]);
 
-    function getData() {
-        [data, setData] = GetSingleImage();
-    }    const handleOnClick = (e) =>{
-        e.preventDefault();
-        // [data, setData] = GetSingleImage();
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(datajs.url, {headers: datajs.encabezadoGet});
+            setData(response.data);
+        } catch (error) {
+            console.error("Error de la data:", error.response);
+        }
+    };
+
+    function handleOnClick() {
+        // e.preventDefault();
+        fetchData().then(r => null);
         if (document.getElementById('getImage')) {
+            // alert(data.src);
             let ndx = ReactDOM.createRoot(document.getElementById("getImage"));
             ndx.render(
                 <React.StrictMode>
-                    <SayImage src={data.src} nombre={data.nombre} />
+                    <SayImage src={data.src} nombre={data.nombre} cualquiera={data.cualquiera} />
                 </React.StrictMode>
             )
         }
@@ -24,8 +33,8 @@ const GetDashboard = () => {
 
     return (
         <>
-        <div className="card-header text-bg-danger" onClick={handleOnClick} >
-            Dashbord
+        <div className="card-header text-bg-danger" onClick={() => handleOnClick()} >
+            Dashboard
         </div>
         </>
     );

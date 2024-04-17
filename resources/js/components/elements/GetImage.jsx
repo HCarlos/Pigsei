@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from "react";
+import GetImageDataJson from "./GetImageDataJson.js";
+import React, { useState } from "react";
 import ReactDOM from 'react-dom/client';
-import {GetSingleImage} from "./GetSingleImage.js";
 import {SayImage} from "./SayImage.jsx";
+import axios from "axios";
+
 function GetImage(){
-    let recargar = false;
     // State to store the fetched data
-    const [data, setData] = GetSingleImage(recargar);
+    let datajs = new GetImageDataJson();
+    const [data, setData] = useState(async () => {
+        try {
+            const response = await axios.get(datajs.url, {headers: datajs.encabezadoGet});
+            setData(response.data);
+            // alert(data.any);
+        } catch (error) {
+            console.error("Error de la data:", error.response);
+        }
+    });
+
     return (
         <div>
-            <SayImage src={data.src} nombre={data.nombre} />
+            <SayImage src={data.src} nombre={data.nombre} cualquiera={data.cualquiera} />
         </div>
     );
-};
+}
 
 
 export default GetImage;
